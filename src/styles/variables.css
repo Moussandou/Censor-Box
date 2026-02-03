@@ -1,0 +1,33 @@
+@import 'keyboard-css/dist/css/main.min.css';
+
+:root {
+  /* Device Colors - CENSOR BOX White */
+  --device-plastic: #f0f0f0;
+  --device-plastic-dark: #d4d4d4;
+  --device-plastic-shadow: #b0b0b0;
+
+  /* Screen Colors - Gov OS */
+  --screen-bg: #0a0a0a;
+  /* Dark MGS/Fallout background */
+  --screen-text: #33ff00;
+  /* Radar Green or Amber? Let's go High Contrast Green/White */
+  --screen-text-primary: #f0f0f0;
+  --screen-accent: #ff3300;
+  /* Red Alert */
+
+  --censor-ink: #111;
+
+  /* Dimensions - Console */
+  --device-width: 600px;
+  --device-height: 500px;
+
+  /* Font */
+  --font-gov: 'Special Elite', monospace;
+  /* The "Old Report" look */
+}
+
+body {
+  background-color: #f5f5f5;
+  /* Light desk/paper background */
+  font-family: var(--font-gov);
+}

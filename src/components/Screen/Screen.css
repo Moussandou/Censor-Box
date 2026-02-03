@@ -1,0 +1,163 @@
+.screen-container {
+    width: 100%;
+    height: 100%;
+    background: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Special Elite', monospace;
+    color: #111;
+    border: 2px solid #333;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px,
+            rgba(0, 0, 0, 0.03) 4px);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: 11;
+}
+
+.os-interface {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 6px;
+    position: relative;
+    z-index: 5;
+}
+
+.os-header,
+.os-footer {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    padding-bottom: 3px;
+    font-size: 0.6rem;
+    color: #333;
+}
+
+.os-footer {
+    border-bottom: none;
+    border-top: 1px solid #333;
+    padding-top: 3px;
+    margin-top: auto;
+}
+
+.document-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.document-flow {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 8px;
+    font-size: 1.1rem;
+}
+
+.word-item {
+    color: #111;
+    opacity: 0.4;
+    transition: all 0.2s;
+}
+
+.word-item.status-current {
+    opacity: 1;
+    background: #ddd;
+    padding: 2px 4px;
+    border: 1px dashed #333;
+}
+
+.word-item.status-censored {
+    background: #111;
+    color: #111;
+    padding: 2px 4px;
+}
+
+.word-item.status-missed {
+    color: #900;
+    text-decoration: line-through;
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #111;
+    color: #fff;
+    padding: 15px 20px;
+    font-weight: bold;
+    z-index: 20;
+    text-align: center;
+    border: 2px solid #333;
+    font-size: 0.8rem;
+}
+
+.restart-btn {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.7rem;
+}
+
+.restart-btn:hover {
+    background: #444;
+}
+
+@media (min-width: 480px) {
+    .os-interface {
+        padding: 8px;
+    }
+
+    .os-header,
+    .os-footer {
+        font-size: 0.7rem;
+        padding-bottom: 4px;
+    }
+
+    .os-footer {
+        padding-top: 4px;
+    }
+
+    .document-flow {
+        gap: 10px;
+        font-size: 1.4rem;
+    }
+
+    .game-over {
+        padding: 20px 30px;
+        font-size: 1rem;
+    }
+
+    .restart-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
