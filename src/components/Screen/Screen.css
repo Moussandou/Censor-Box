@@ -352,7 +352,7 @@
     margin-top: 8px;
 }
 
-/* Win Screen Overlay Modal */
+/* Win Screen Overlay Modal & Docs */
 .win-document-modal {
     position: fixed;
     top: 0;
@@ -375,68 +375,168 @@
     display: none;
 }
 
+/* Realistic Document Mockup */
 .win-document-modal .win-document {
     position: relative;
     top: auto;
-    transform: rotate(0deg) scale(1.5);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    background: #f5f5f0;
-    width: 200px;
-    height: 280px;
-    padding: 15px;
-}
-
-.close-modal-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: 2px solid #fff;
-    color: #fff;
-    font-size: 2rem;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
+    transform: rotate(2deg) scale(1.4);
+    box-shadow: 2px 5px 15px #00000080;
+    background: #fdfbf7;
+    /* Aged paper */
+    background-image: repeating-linear-gradient(transparent, transparent 19px, #e5e5e5 20px);
+    /* Lined paper hint */
+    width: 240px;
+    height: 320px;
+    padding: 20px 25px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #222;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.7;
-    transition: all 0.2s;
-    z-index: 1001;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.close-modal-btn:hover {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.1);
+/* Paperclip (CSS Only) */
+.doc-clip {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 12px;
+    height: 35px;
+    border: 3px solid #888;
+    border-radius: 10px;
+    border-bottom: none;
+    z-index: 5;
+    background: transparent;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Document content adjustments for large view */
 .win-document-modal .win-doc-header {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-    border-width: 2px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-.win-document-modal .win-doc-id {
+.dept-seal {
+    font-weight: bold;
+    font-family: serif;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.dept-name {
     font-size: 0.5rem;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.classification-mark {
+    margin-top: 4px;
+    font-size: 0.45rem;
+    border: 1px solid #111;
+    display: inline-block;
+    padding: 1px 4px;
+    font-weight: bold;
 }
 
 .win-document-modal .win-doc-body {
-    gap: 8px;
+    font-size: 0.5rem;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.doc-date,
+.doc-subject {
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.doc-text-block {
     margin-top: 10px;
+    text-align: justify;
 }
 
-.win-document-modal .redacted-line {
-    height: 8px;
+.redacted-chunk {
+    display: inline-block;
+    background: #111;
+    height: 0.6em;
+    vertical-align: middle;
+    margin: 0 2px;
+    opacity: 0.9;
 }
 
-.win-document-modal .win-stamp {
+.redacted-chunk.w-30 {
+    width: 30px;
+}
+
+.redacted-chunk.w-40 {
+    width: 40px;
+}
+
+.redacted-chunk.w-60 {
+    width: 60px;
+}
+
+.doc-signature-area {
+    margin-top: auto;
+    margin-bottom: 20px;
+    width: 60%;
+    align-self: flex-end;
+}
+
+.signature-line {
+    border-bottom: 1px solid #111;
+    margin-bottom: 2px;
+    position: relative;
+}
+
+.sig-text {
+    font-family: 'Brush Script MT', cursive;
     font-size: 1.2rem;
-    border-width: 3px;
+    position: absolute;
+    bottom: 2px;
+    left: 10px;
+    transform: rotate(-5deg);
+    color: #000088;
+    /* Blue ink */
+}
+
+.signature-label {
+    font-size: 0.4rem;
+    text-align: center;
+}
+
+/* Realistic Stamp */
+.win-document-modal .win-stamp {
+    position: absolute;
     bottom: 40px;
     right: 20px;
-    transform: rotate(-15deg);
+    color: #c00;
+    /* Red ink */
+    border: 3px double #c00;
+    padding: 2px;
+    transform: rotate(-12deg);
+    opacity: 0.8;
+    mix-blend-mode: multiply;
+}
+
+.stamp-inner {
+    border: 1px solid #c00;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.stamp-date {
+    font-size: 0.4rem;
+    margin-top: 2px;
+    font-weight: normal;
 }
 
 .win-status {
@@ -660,4 +760,74 @@
     .menu-footer {
         font-size: 0.55rem;
     }
+}
+
+/* Credits / Personnel File Styles */
+.credits-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #e6e6e6;
+    border: 1px solid #333;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    margin-bottom: 5px;
+    /* Reduced margin */
+}
+
+.agent-photo {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border: 2px solid #111;
+    background: #fff;
+    margin-bottom: 6px;
+    filter: grayscale(100%) contrast(120%);
+}
+
+.agent-info {
+    text-align: center;
+    margin-bottom: 8px;
+    width: 100%;
+    border-bottom: 1px dashed #999;
+    padding-bottom: 5px;
+}
+
+.agent-name {
+    font-weight: bold;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.agent-rank {
+    font-size: 0.5rem;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.agent-links {
+    display: flex;
+    flex-direction: row;
+    /* Horizontal row for icons */
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 2px 0;
+}
+
+.link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: all 0.2s;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.link-icon:hover {
+    background: #333;
+    color: #fff;
+    transform: scale(1.1);
 }

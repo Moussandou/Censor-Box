@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useGameLoop, DIFFICULTIES } from '../../lib/gameEngine';
 import type { WordItem } from '../../lib/gameEngine';
+import { Github, Linkedin, FileUser, Instagram } from 'lucide-react';
 import './Screen.css';
 
-type MenuState = 'main' | 'difficulty' | 'game';
+type MenuState = 'main' | 'difficulty' | 'game' | 'credits';
 
 interface ScreenProps {
     onInputRef?: (callback: (keyId: number) => void) => void;
@@ -103,11 +104,55 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                         <button className="menu-btn primary" onClick={() => setMenuState('difficulty')}>
                             START
                         </button>
+                        <button className="menu-btn" onClick={() => setMenuState('credits')}>
+                            CREDITS
+                        </button>
                     </div>
 
                     <div className="menu-footer">
                         PRESS START TO BEGIN
                     </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Credits Screen
+    if (menuState === 'credits') {
+        return (
+            <div className="screen-container">
+                <div className="scanlines"></div>
+                <div className="vignette"></div>
+
+                <div className="menu-screen">
+                    <div className="menu-title">PERSONNEL FILE</div>
+
+                    <div className="credits-card">
+                        <img src="/src/assets/moussandou.png" alt="Agent" className="agent-photo" />
+                        <div className="agent-info">
+                            <div className="agent-name">AGENT MOUSSANDOU</div>
+                            <div className="agent-rank">FULL STACK DEVELOPER</div>
+                        </div>
+
+                        <div className="agent-links">
+                            <a href="https://github.com/Moussandou" target="_blank" rel="noopener noreferrer" className="link-icon" title="Github">
+                                <Github size={20} />
+                            </a>
+                            <a href="https://www.linkedin.com/in/moussandou/" target="_blank" rel="noopener noreferrer" className="link-icon" title="LinkedIn">
+                                <Linkedin size={20} />
+                            </a>
+                            <a href="https://moussandou.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" className="link-icon" title="Portfolio">
+                                <FileUser size={20} />
+                            </a>
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="link-icon" title="Instagram">
+                                <Instagram size={20} />
+                            </a>
+                        </div>
+                    </div>
+
+                    <button className="menu-btn back-btn" onClick={handleBackToMenu}>
+                        BACK
+                    </button>
                 </div>
             </div>
         );
@@ -206,18 +251,43 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                                             modal?.classList.add('closed');
                                         }}>×</button>
                                         <div className="win-document">
-                                            <div className="win-doc-header">TOP SECRET</div>
-                                            <div className="win-doc-id">CASE #8921</div>
-                                            <div className="win-doc-body">
-                                                <div className="redacted-line w-80"></div>
-                                                <div className="redacted-line w-60"></div>
-                                                <div className="redacted-line w-90"></div>
-                                                <div className="redacted-line w-40"></div>
-                                                <div className="redacted-line w-70"></div>
-                                                <div className="redacted-line w-50"></div>
-                                                <div className="redacted-line w-80"></div>
+                                            {/* CSS Paperclip */}
+                                            <div className="doc-clip"></div>
+
+                                            <div className="win-doc-header">
+                                                <div className="dept-seal">USG</div>
+                                                <div className="dept-name">INTELLIGENCE AGENCY</div>
+                                                <div className="classification-mark">TOP SECRET // NOFORN</div>
                                             </div>
-                                            <div className="win-stamp">CENSORED</div>
+
+                                            <div className="win-doc-body">
+                                                <div className="doc-date">DATE: {new Date().toLocaleDateString()}</div>
+                                                <div className="doc-subject">SUBJECT: OPERATION CENSOR BOX</div>
+
+                                                <div className="doc-text-block">
+                                                    <span className="text-line">The following report contains</span>
+                                                    <span className="redacted-chunk w-40"></span>
+                                                    <span className="text-line">regarding the incident at</span>
+                                                    <span className="redacted-chunk w-60"></span>
+                                                    <span className="text-line">. Agent performance was rated as</span>
+                                                    <span className="redacted-chunk w-30"></span>
+                                                    <span className="text-line">exceptional.</span>
+                                                </div>
+
+                                                <div className="doc-signature-area">
+                                                    <div className="signature-line">
+                                                        <span className="sig-text">Director J. Edgar</span>
+                                                    </div>
+                                                    <div className="signature-label">DIRECTOR</div>
+                                                </div>
+                                            </div>
+
+                                            <div className="win-stamp">
+                                                <div className="stamp-inner">
+                                                    APPROVED
+                                                    <span className="stamp-date">{new Date().toLocaleDateString()}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>,
                                     document.body

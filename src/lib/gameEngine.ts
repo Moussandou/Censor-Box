@@ -118,41 +118,65 @@ export const useGameLoop = (active: boolean, difficulty: string = 'normal', rese
     const handleInput = useCallback((keyId: number) => {
         if (gameOver || !active) return;
 
-        sounds.keyPress();
         const idx = currentIndexRef.current;
+        const currentWord = words[idx];
 
+        // Guard: If logic is desynced or word missing
+        if (!currentWord || currentWord.status !== 'current') return;
+
+        sounds.keyPress();
+
+        let newStatus: WordItem['status'] = 'pending';
+        let isCorrect = false;
+        let isSkip = false;
+
+        // Game Logic Decision
+        if (keyId === 5) {
+            newStatus = 'pending'; // Skipped words stay pending? or 'missed'? Original was 'pending'
+            isSkip = true;
+        } else if (currentWord.category === keyId) {
+            newStatus = 'censored';
+            isCorrect = true;
+        } else {
+            newStatus = 'missed';
+            isCorrect = false;
+        }
+
+        // Apply Side Effects (Score, Lives, Sounds)
+        if (isSkip) {
+            sounds.skip();
+            // No score/life change on skip?
+        } else if (isCorrect) {
+            setScore(s => s + 10);
+            sounds.correct();
+        } else {
+            setLives(l => l - 1);
+            sounds.wrong();
+        }
+
+        // Update Words State
         setWords(prev => {
             const newWords = [...prev];
-            const currentWord = newWords[idx];
+            newWords[idx] = { ...newWords[idx], status: newStatus };
 
-            if (!currentWord || currentWord.status !== 'current') return prev;
-
-            if (keyId === 5) {
-                newWords[idx] = { ...currentWord, status: 'pending' };
-                sounds.skip();
-            } else if (currentWord.category === keyId) {
-                newWords[idx] = { ...currentWord, status: 'censored' };
-                setScore(s => s + 10);
-                sounds.correct();
-            } else {
-                newWords[idx] = { ...currentWord, status: 'missed' };
-                setLives(l => l - 1);
-                sounds.wrong();
-            }
-
+            // Set next word to current
             const nextIndex = idx + 1;
             if (nextIndex < newWords.length) {
                 newWords[nextIndex] = { ...newWords[nextIndex], status: 'current' };
-                setCurrentIndex(nextIndex);
-                currentIndexRef.current = nextIndex;
-            } else {
-                setGameOver(true);
-                sounds.gameOver();
             }
-
             return newWords;
         });
-    }, [gameOver, active]);
+
+        // Advance Index
+        const nextIndex = idx + 1;
+        if (nextIndex < words.length) {
+            setCurrentIndex(nextIndex);
+            currentIndexRef.current = nextIndex;
+        } else {
+            setGameOver(true);
+            sounds.gameOver();
+        }
+    }, [gameOver, active, words]); // Added 'words' dependency
 
     return {
         words,
