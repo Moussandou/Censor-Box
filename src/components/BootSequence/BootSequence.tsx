@@ -20,11 +20,11 @@ export const BootSequence = ({ onComplete }: BootSequenceProps) => {
             if (userText.length < TARGET_USER.length) {
                 const timeout = setTimeout(() => {
                     setUserText(TARGET_USER.substring(0, userText.length + 1));
-                }, 150 + Math.random() * 100); // Random typing speed
+                }, 40 + Math.random() * 30); // MUCH FASTER typing
                 return () => clearTimeout(timeout);
             } else {
                 // User finished, wait a bit then move to PASS
-                const timeout = setTimeout(() => setStage('pass'), 800);
+                const timeout = setTimeout(() => setStage('pass'), 200);
                 return () => clearTimeout(timeout);
             }
         }
@@ -34,24 +34,24 @@ export const BootSequence = ({ onComplete }: BootSequenceProps) => {
             if (passText.length < TARGET_PASS.length) {
                 const timeout = setTimeout(() => {
                     setPassText(TARGET_PASS.substring(0, passText.length + 1));
-                }, 150 + Math.random() * 100);
+                }, 40 + Math.random() * 30);
                 return () => clearTimeout(timeout);
             } else {
                 // Pass finished, wait then AUTH
-                const timeout = setTimeout(() => setStage('auth'), 600);
+                const timeout = setTimeout(() => setStage('auth'), 200);
                 return () => clearTimeout(timeout);
             }
         }
 
         // AUTHENTICATING
         if (stage === 'auth') {
-            const timeout = setTimeout(() => setStage('success'), 1500);
+            const timeout = setTimeout(() => setStage('success'), 600);
             return () => clearTimeout(timeout);
         }
 
         // SUCCESS -> COMPLETE
         if (stage === 'success') {
-            const timeout = setTimeout(onComplete, 1500);
+            const timeout = setTimeout(onComplete, 800);
             return () => clearTimeout(timeout);
         }
 
