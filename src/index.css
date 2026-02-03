@@ -18,10 +18,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('./assets/bg-secret.png') no-repeat center center;
-  background-size: cover;
-  background-color: #ddd;
+  background-color: #555;
   overflow: hidden;
-  perspective: 1000px;
-  /* Essential for 3D elements */
 }

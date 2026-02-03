@@ -35,6 +35,7 @@
     z-index: 11;
 }
 
+/* Game Interface */
 .os-interface {
     display: flex;
     flex-direction: column;
@@ -48,10 +49,12 @@
 .os-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid #333;
     padding-bottom: 3px;
     font-size: 0.6rem;
     color: #333;
+    gap: 5px;
 }
 
 .os-footer {
@@ -59,6 +62,55 @@
     border-top: 1px solid #333;
     padding-top: 3px;
     margin-top: auto;
+}
+
+/* Hearts */
+.lives {
+    display: flex;
+    gap: 2px;
+}
+
+.heart {
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.heart.active {
+    color: #cc0000;
+}
+
+.heart.empty {
+    color: #999;
+    opacity: 0.4;
+}
+
+.timer {
+    font-family: monospace;
+    font-weight: bold;
+    padding: 2px 5px;
+    background: #eee;
+    border-radius: 3px;
+    font-size: 0.65rem;
+}
+
+.timer.warning {
+    background: #e33;
+    color: white;
+    animation: pulse 0.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.6;
+    }
+}
+
+.score {
+    font-weight: bold;
 }
 
 .document-area {
@@ -73,8 +125,8 @@
     display: flex;
     align-items: center;
     white-space: nowrap;
-    gap: 8px;
-    font-size: 1.1rem;
+    gap: 6px;
+    font-size: 1rem;
 }
 
 .word-item {
@@ -101,6 +153,7 @@
     text-decoration: line-through;
 }
 
+/* Game Over */
 .game-over {
     position: absolute;
     top: 50%;
@@ -108,29 +161,177 @@
     transform: translate(-50%, -50%);
     background: #111;
     color: #fff;
-    padding: 15px 20px;
+    padding: 12px 16px;
     font-weight: bold;
     z-index: 20;
     text-align: center;
     border: 2px solid #333;
+    font-size: 0.7rem;
+}
+
+.game-over-title {
     font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.game-over-score {
+    font-size: 0.7rem;
+    opacity: 0.8;
 }
 
 .restart-btn {
-    margin-top: 10px;
-    padding: 6px 12px;
+    margin-top: 8px;
+    padding: 5px 10px;
     background: #333;
     color: #fff;
     border: 1px solid #555;
     cursor: pointer;
     font-family: inherit;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
 }
 
 .restart-btn:hover {
     background: #444;
 }
 
+/* Menu Screens */
+.menu-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    z-index: 5;
+}
+
+.menu-logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #111;
+}
+
+.menu-logo-sub {
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 6px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.menu-title {
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 3px;
+}
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    max-width: 140px;
+}
+
+.main-menu {
+    margin-top: 10px;
+}
+
+.menu-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 8px;
+    background: #eee;
+    border: 2px solid #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    font-size: 0.6rem;
+}
+
+.menu-btn.primary {
+    background: #333;
+    color: #fff;
+    font-weight: bold;
+    padding: 8px 20px;
+}
+
+.menu-btn.primary:hover {
+    background: #555;
+}
+
+.menu-btn:hover {
+    background: #333;
+    color: #fff;
+}
+
+.menu-btn:active {
+    transform: scale(0.98);
+}
+
+.difficulty-name {
+    font-weight: bold;
+    font-size: 0.6rem;
+}
+
+.difficulty-desc {
+    font-size: 0.45rem;
+    opacity: 0.7;
+    margin-top: 1px;
+}
+
+.difficulty-easy .difficulty-name {
+    color: #28a745;
+}
+
+.difficulty-normal .difficulty-name {
+    color: #007bff;
+}
+
+.difficulty-hard .difficulty-name {
+    color: #dc3545;
+}
+
+.menu-btn:hover .difficulty-name,
+.menu-btn:hover .difficulty-desc {
+    color: #fff;
+}
+
+.back-btn {
+    margin-top: 8px;
+    font-size: 0.5rem;
+    padding: 4px 10px;
+    opacity: 0.7;
+}
+
+.menu-footer {
+    margin-top: 15px;
+    font-size: 0.45rem;
+    opacity: 0.5;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 0.5;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Responsive */
 @media (min-width: 480px) {
     .os-interface {
         padding: 8px;
@@ -139,16 +340,11 @@
     .os-header,
     .os-footer {
         font-size: 0.7rem;
-        padding-bottom: 4px;
-    }
-
-    .os-footer {
-        padding-top: 4px;
     }
 
     .document-flow {
         gap: 10px;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
     .game-over {
@@ -156,8 +352,45 @@
         font-size: 1rem;
     }
 
+    .game-over-title {
+        font-size: 1rem;
+    }
+
     .restart-btn {
         padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    .menu-logo {
+        font-size: 1.8rem;
+    }
+
+    .menu-logo-sub {
+        font-size: 1.1rem;
+    }
+
+    .menu-title {
         font-size: 0.9rem;
+    }
+
+    .menu-options {
+        max-width: 180px;
+    }
+
+    .menu-btn {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+
+    .difficulty-name {
+        font-size: 0.7rem;
+    }
+
+    .difficulty-desc {
+        font-size: 0.55rem;
+    }
+
+    .menu-footer {
+        font-size: 0.55rem;
     }
 }
