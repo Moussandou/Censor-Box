@@ -1,10 +1,12 @@
 import { useRef, useCallback, useState, useEffect } from 'react';
 import { Screen } from '../Screen/Screen';
 import { Keyboard } from '../Keyboard/Keyboard';
+import { BootSequence } from '../BootSequence/BootSequence';
 import './Device.css';
 
 export const Device = () => {
     const inputHandlerRef = useRef<((keyId: number) => void) | null>(null);
+    const [showBoot, setShowBoot] = useState(true);
     const [resetKey, setResetKey] = useState(0);
     // Initialize mute state from localStorage
     const [isMuted, setIsMuted] = useState(() => {
@@ -21,12 +23,10 @@ export const Device = () => {
         // Apply initial mute state
         audioRef.current.muted = isMuted;
 
-        // Autoplay on first interaction
+        // Autoplay logic
         const startMusic = () => {
             if (audioRef.current && audioRef.current.paused) {
-                audioRef.current.play().catch(() => {
-                    // Autoplay blocked, will play on next interaction
-                });
+                audioRef.current.play().catch(() => { });
             }
             document.removeEventListener('click', startMusic);
             document.removeEventListener('keydown', startMusic);
@@ -43,7 +43,7 @@ export const Device = () => {
                 audioRef.current = null;
             }
         };
-    }, []); // Empty dependency array - mostly for initial setup
+    }, []);
 
     useEffect(() => {
         if (audioRef.current) {
@@ -64,6 +64,9 @@ export const Device = () => {
 
     const handleReset = () => {
         setResetKey(prev => prev + 1);
+        // Optional: Do we want to show boot again on reset? 
+        // Maybe not on soft reset. 
+        // If we want hard reset: setShowBoot(true);
     };
 
     const toggleMute = () => {
@@ -72,18 +75,21 @@ export const Device = () => {
 
     return (
         <div className="scene">
-            <div className="ambient-files">
-                <div className="file f1">TOP SECRET</div>
-                <div className="file f2">CASE #8921</div>
-                <div className="file f3">EVIDENCE</div>
+            <div className="bg-elements">
+                <div className="bg-folder f1">TOP SECRET</div>
+                <div className="bg-folder f2">CONFIDENTIAL</div>
+                <div className="bg-item pen"></div>
             </div>
 
             <div className="rdctd-console">
-                <div className="console-body">
+                <div className="post-it p1">DO NOT<br />LEAK</div>
+                <div className="post-it p2">EYES<br />ONLY</div>
 
+                <div className="console-body">
                     <div className="brand-header">
                         <img src="/src/assets/logo.png" alt="" className="brand-logo" />
                         <span className="brand-text">CENSOR BOX <span className="tm">™</span></span>
+
                         <button
                             className="control-keycap kbc-button kbc-button-dark"
                             onClick={toggleMute}
@@ -94,23 +100,25 @@ export const Device = () => {
                         <button
                             className="control-keycap kbc-button kbc-button-dark"
                             onClick={handleReset}
-                            title="Restart"
+                            title="Reset"
                         >
-                            ↺
+                            ↻
                         </button>
                     </div>
 
                     <div className="screen-housing">
-                        <Screen key={resetKey} onInputRef={setInputHandler} />
-                        <div className="screen-glare"></div>
+                        {showBoot ? (
+                            <BootSequence onComplete={() => setShowBoot(false)} />
+                        ) : (
+                            <Screen key={resetKey} onInputRef={setInputHandler} />
+                        )}
                     </div>
-
                     <div className="control-deck">
                         <Keyboard onKeyPress={handleKeyPress} />
                     </div>
                 </div>
 
-                {/* 3D Sides/Thickness */}
+                {/* 3D Sides/Thickness - purely decorative if needed or managed by CSS on rdctd-console */}
                 <div className="chassis-side left"></div>
                 <div className="chassis-side right"></div>
                 <div className="chassis-side bottom"></div>

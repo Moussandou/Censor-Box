@@ -143,8 +143,14 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
     }
 
     // Game Screen
+    const getStressClass = () => {
+        if (lives <= 1) return 'stress-critical';
+        if (timeLeft <= 10) return 'stress-warning';
+        return '';
+    };
+
     return (
-        <div className="screen-container" key={gameKey}>
+        <div className={`screen-container ${getStressClass()}`} key={gameKey}>
             <div className="scanlines"></div>
             <div className="vignette"></div>
 

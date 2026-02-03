@@ -181,6 +181,105 @@
     display: none;
 }
 
+/* NEW AMBIANCE STYLES */
+
+/* Post-it Notes */
+.post-it {
+    position: absolute;
+    background: #fefeb0;
+    color: #333;
+    padding: 10px;
+    font-family: 'Courier New', cursive;
+    /* Fallback */
+    font-weight: bold;
+    font-size: 0.8rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+    transform: rotate(-5deg);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.post-it.p1 {
+    top: -15px;
+    right: -25px;
+    transform: rotate(5deg);
+}
+
+.post-it.p2 {
+    bottom: 50px;
+    left: -35px;
+    transform: rotate(-8deg);
+    background: #ffccbc;
+    /* Slight orange tint */
+}
+
+/* Background Elements */
+.bg-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.bg-folder {
+    position: absolute;
+    background: #d4a76a;
+    width: 120px;
+    height: 90px;
+    border-radius: 2px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: #5d4037;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    opacity: 0.6;
+}
+
+.bg-folder::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 40px;
+    height: 10px;
+    background: #d4a76a;
+    border-radius: 2px 2px 0 0;
+}
+
+.bg-folder.f1 {
+    top: 10%;
+    left: 10%;
+    transform: rotate(-15deg);
+    animation: float 6s ease-in-out infinite;
+}
+
+.bg-folder.f2 {
+    bottom: 15%;
+    right: 10%;
+    transform: rotate(10deg);
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-15deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(-12deg);
+    }
+}
+
 /* Responsive breakpoints */
 @media (min-width: 480px) {
     .rdctd-console {
@@ -222,47 +321,7 @@
         min-height: 200px;
     }
 
-    .ambient-files {
+    .bg-elements {
         display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: 0;
-    }
-
-    .file {
-        position: absolute;
-        background: #fff;
-        padding: 20px;
-        color: #aa0000;
-        font-family: var(--font-gov);
-        font-weight: bold;
-        font-size: 2rem;
-        border: 2px solid #aa0000;
-        transform: rotate(-15deg);
-        opacity: 0.1;
-        z-index: 0;
-    }
-
-    .f1 {
-        top: 10%;
-        left: 5%;
-        transform: rotate(-20deg);
-    }
-
-    .f2 {
-        bottom: 20%;
-        right: 10%;
-        transform: rotate(10deg);
-    }
-
-    .f3 {
-        top: 50%;
-        left: -50px;
-        transform: rotate(45deg);
-        font-size: 4rem;
-        opacity: 0.05;
     }
 }
