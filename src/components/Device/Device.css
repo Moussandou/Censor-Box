@@ -40,17 +40,17 @@
     max-width: 500px;
     height: auto;
     min-height: 500px;
-    background: linear-gradient(180deg, #f0f0f0 0%, #d8d8d8 100%);
+    background: linear-gradient(180deg, #e8e2d6 0%, #d4cec2 50%, #c8c2b6 100%);
     border-radius: 40px;
     box-shadow:
         0 40px 80px rgba(0, 0, 0, 0.5),
         0 20px 40px rgba(0, 0, 0, 0.3),
-        inset 0 2px 0 rgba(255, 255, 255, 0.9),
-        inset 0 -5px 20px rgba(0, 0, 0, 0.1);
+        inset 0 2px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -5px 20px rgba(60, 40, 20, 0.15);
     display: flex;
     flex-direction: column;
     padding: 20px;
-    border: 4px solid rgba(255, 255, 255, 0.8);
+    border: 4px solid rgba(180, 170, 150, 0.8);
     z-index: 10;
 }
 
@@ -86,11 +86,11 @@
     flex-wrap: wrap;
 }
 
-.reset-keycap {
-    width: 35px !important;
-    height: 35px !important;
-    min-width: 35px;
-    font-size: 1rem;
+.control-keycap {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px;
+    font-size: 0.8rem;
     cursor: pointer;
     display: flex !important;
     align-items: center;
@@ -98,11 +98,15 @@
     padding: 0 !important;
 }
 
-.reset-keycap:hover {
+.control-keycap:first-of-type {
+    margin-left: auto;
+}
+
+.control-keycap:hover {
     transform: scale(1.05);
 }
 
-.reset-keycap:active {
+.control-keycap:active {
     transform: scale(0.95);
 }
 
@@ -127,7 +131,7 @@
 
 .screen-housing {
     width: 100%;
-    height: 150px;
+    height: 220px;
     background: #0a0a0a;
     border-radius: 10px;
     border: 4px solid #999;
@@ -156,11 +160,11 @@
 .control-deck {
     flex: 1;
     min-height: 180px;
-    background: linear-gradient(180deg, #e8e8e8 0%, #c8c8c8 100%);
+    background: linear-gradient(180deg, #ddd8cc 0%, #c8c3b5 100%);
     border-radius: 15px;
     box-shadow:
-        inset 3px 3px 10px rgba(0, 0, 0, 0.15),
-        inset -3px -3px 10px rgba(255, 255, 255, 0.7),
+        inset 3px 3px 10px rgba(60, 40, 20, 0.15),
+        inset -3px -3px 10px rgba(255, 250, 240, 0.5),
         0 3px 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
     position: relative;
@@ -192,7 +196,7 @@
     }
 
     .screen-housing {
-        height: 170px;
+        height: 260px;
     }
 }
 
@@ -211,7 +215,7 @@
     }
 
     .screen-housing {
-        height: 180px;
+        height: 280px;
     }
 
     .control-deck {

@@ -22,26 +22,26 @@ export const DIFFICULTIES: Record<string, DifficultyConfig> = {
         name: 'EASY',
         lives: 5,
         time: 90,
-        wordCount: 30,
-        description: '5 vies • 90 sec'
+        wordCount: 15,
+        description: '5 vies • 15 mots'
     },
     normal: {
         name: 'NORMAL',
         lives: 3,
         time: 60,
-        wordCount: 50,
-        description: '3 vies • 60 sec'
+        wordCount: 30,
+        description: '3 vies • 30 mots'
     },
     hard: {
         name: 'HARD',
         lives: 2,
         time: 40,
-        wordCount: 70,
-        description: '2 vies • 40 sec'
+        wordCount: 50,
+        description: '2 vies • 50 mots'
     }
 };
 
-export const useGameLoop = (active: boolean, difficulty: string = 'normal') => {
+export const useGameLoop = (active: boolean, difficulty: string = 'normal', resetKey: number = 0) => {
     const config = DIFFICULTIES[difficulty] || DIFFICULTIES.normal;
 
     const [words, setWords] = useState<WordItem[]>([]);
@@ -108,12 +108,12 @@ export const useGameLoop = (active: boolean, difficulty: string = 'normal') => {
         }
     }, [lives, gameOver]);
 
-    // Initialize
+    // Initialize or restart on resetKey change
     useEffect(() => {
-        if (active && words.length === 0) {
+        if (active) {
             initializeGame();
         }
-    }, [active, words.length, initializeGame]);
+    }, [active, resetKey, initializeGame]);
 
     const handleInput = useCallback((keyId: number) => {
         if (gameOver || !active) return;

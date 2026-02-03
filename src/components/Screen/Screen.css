@@ -64,24 +64,18 @@
     margin-top: auto;
 }
 
-/* Hearts */
+/* HP Display */
 .lives {
     display: flex;
-    gap: 2px;
+    align-items: center;
+    gap: 4px;
 }
 
-.heart {
-    font-size: 0.75rem;
-    line-height: 1;
-}
-
-.heart.active {
-    color: #cc0000;
-}
-
-.heart.empty {
-    color: #999;
-    opacity: 0.4;
+.heart-asset {
+    width: 14px;
+    height: 14px;
+    image-rendering: pixelated;
+    opacity: 0.9;
 }
 
 .timer {
@@ -117,8 +111,11 @@
     flex: 1;
     position: relative;
     overflow: hidden;
-    display: flex;
-    align-items: center;
+    /* Important for flexbox overflow handling */
+    min-width: 0;
+    width: 100%;
+    /* Ensure height is constrained */
+    height: 100%;
 }
 
 .document-flow {
@@ -127,6 +124,13 @@
     white-space: nowrap;
     gap: 6px;
     font-size: 1rem;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: max-content;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    /* Improve performance */
+    will-change: transform;
 }
 
 .word-item {
@@ -140,6 +144,8 @@
     background: #ddd;
     padding: 2px 4px;
     border: 1px dashed #333;
+    /* Ensure it doesn't jump in size */
+    box-sizing: border-box;
 }
 
 .word-item.status-censored {
@@ -194,62 +200,177 @@
     background: #444;
 }
 
-/* Menu Screens */
+.game-over-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+/* Win Screen Overlay Modal */
+.win-document-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s;
+}
+
+.win-document-modal.closed {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+
+.win-document-modal .win-document {
+    position: relative;
+    top: auto;
+    transform: rotate(0deg) scale(1.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    background: #f5f5f0;
+    width: 200px;
+    height: 280px;
+    padding: 15px;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.2s;
+    z-index: 1001;
+}
+
+.close-modal-btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Document content adjustments for large view */
+.win-document-modal .win-doc-header {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    border-width: 2px;
+}
+
+.win-document-modal .win-doc-id {
+    font-size: 0.5rem;
+}
+
+.win-document-modal .win-doc-body {
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.win-document-modal .redacted-line {
+    height: 8px;
+}
+
+.win-document-modal .win-stamp {
+    font-size: 1.2rem;
+    border-width: 3px;
+    bottom: 40px;
+    right: 20px;
+    transform: rotate(-15deg);
+}
+
+.win-status {
+    z-index: 20;
+    margin-top: 100px;
+    /* Push below document */
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    position: relative;
+    top: 10px;
+}
+
+.win-title {
+    color: #4caf50;
+    font-weight: bold;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
 .menu-screen {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 10px;
+    padding: 5px;
     position: relative;
     z-index: 5;
+    overflow: hidden;
 }
 
 .menu-logo {
     font-size: 1.4rem;
     font-weight: bold;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     color: #111;
+    line-height: 1;
 }
 
 .menu-logo-sub {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: bold;
-    letter-spacing: 6px;
-    margin-bottom: 15px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
     color: #333;
 }
 
 .menu-title {
     font-size: 0.7rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     color: #333;
     letter-spacing: 1px;
     border-bottom: 1px solid #333;
-    padding-bottom: 3px;
+    padding-bottom: 2px;
 }
 
 .menu-options {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     width: 100%;
     max-width: 140px;
 }
 
 .main-menu {
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .menu-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6px 8px;
+    padding: 5px 8px;
     background: #eee;
-    border: 2px solid #333;
+    border: 1px solid #333;
     cursor: pointer;
     font-family: inherit;
     transition: all 0.15s;
@@ -260,7 +381,8 @@
     background: #333;
     color: #fff;
     font-weight: bold;
-    padding: 8px 20px;
+    padding: 6px 14px;
+    font-size: 0.7rem;
 }
 
 .menu-btn.primary:hover {
@@ -278,13 +400,12 @@
 
 .difficulty-name {
     font-weight: bold;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
 }
 
 .difficulty-desc {
-    font-size: 0.45rem;
+    font-size: 0.5rem;
     opacity: 0.7;
-    margin-top: 1px;
 }
 
 .difficulty-easy .difficulty-name {
@@ -305,15 +426,15 @@
 }
 
 .back-btn {
-    margin-top: 8px;
+    margin-top: 5px;
     font-size: 0.5rem;
-    padding: 4px 10px;
-    opacity: 0.7;
+    padding: 4px 8px;
+    opacity: 0.8;
 }
 
 .menu-footer {
-    margin-top: 15px;
-    font-size: 0.45rem;
+    margin-top: 10px;
+    font-size: 0.5rem;
     opacity: 0.5;
     animation: blink 1.5s infinite;
 }

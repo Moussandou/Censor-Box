@@ -1,4 +1,4 @@
-// Sound generation using Web Audio API with more realistic mechanical sounds
+// Typewriter sound effects using Web Audio API
 let audioContext: AudioContext | null = null;
 
 function getAudioContext(): AudioContext {
@@ -8,22 +8,118 @@ function getAudioContext(): AudioContext {
     return audioContext;
 }
 
-function playNoise(duration: number, volume: number = 0.1) {
+// Create typewriter key strike sound
+function typewriterKey(volume: number = 0.3) {
     const ctx = getAudioContext();
-    const bufferSize = ctx.sampleRate * duration;
+    const now = ctx.currentTime;
+
+    // Click noise (hammer hitting paper)
+    const bufferSize = Math.floor(ctx.sampleRate * 0.05);
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const output = buffer.getChannelData(0);
 
     for (let i = 0; i < bufferSize; i++) {
-        output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.1));
+        // Sharp attack, quick decay
+        const envelope = Math.exp(-i / (bufferSize * 0.08));
+        output[i] = (Math.random() * 2 - 1) * envelope;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    // Bandpass for mechanical click
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 2500;
+    filter.Q.value = 1.5;
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    noise.start(now);
+    noise.stop(now + 0.05);
+
+    // Metallic resonance
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 3000 + Math.random() * 500;
+    oscGain.gain.setValueAtTime(volume * 0.15, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+    osc.connect(oscGain);
+    oscGain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.02);
+}
+
+// Typewriter carriage return / ding
+function typewriterDing(volume: number = 0.25) {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.value = 2000;
+
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.3);
+}
+
+// Error buzz
+function typewriterJam(volume: number = 0.2) {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.value = 80;
+
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.15);
+}
+
+// Paper slide sound
+function paperSlide(volume: number = 0.15) {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    const bufferSize = Math.floor(ctx.sampleRate * 0.1);
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const output = buffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        // Soft friction noise
+        const envelope = Math.sin((i / bufferSize) * Math.PI);
+        output[i] = (Math.random() * 2 - 1) * envelope * 0.3;
     }
 
     const noise = ctx.createBufferSource();
     noise.buffer = buffer;
 
     const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 2000;
+    filter.type = 'highpass';
+    filter.frequency.value = 1500;
 
     const gain = ctx.createGain();
     gain.gain.value = volume;
@@ -32,70 +128,35 @@ function playNoise(duration: number, volume: number = 0.1) {
     filter.connect(gain);
     gain.connect(ctx.destination);
 
-    noise.start();
-}
-
-function playTone(frequency: number, duration: number, type: OscillatorType = 'sine', volume: number = 0.3) {
-    const ctx = getAudioContext();
-    const oscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    oscillator.type = type;
-    oscillator.frequency.value = frequency;
-    gainNode.gain.value = volume;
-
-    oscillator.start();
-    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-    oscillator.stop(ctx.currentTime + duration);
+    noise.start(now);
 }
 
 export const sounds = {
     correct: () => {
-        // Satisfying ding
-        playTone(880, 0.08, 'sine', 0.25);
-        setTimeout(() => playTone(1320, 0.12, 'sine', 0.2), 50);
+        typewriterKey(0.25);
+        setTimeout(() => typewriterDing(0.2), 50);
     },
     wrong: () => {
-        // Buzzer
-        playTone(150, 0.15, 'sawtooth', 0.15);
-        playNoise(0.1, 0.15);
+        typewriterJam(0.2);
     },
     skip: () => {
-        // Whoosh/slide
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(600, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.1);
+        paperSlide(0.15);
     },
     keyPress: () => {
-        // Mechanical click
-        playNoise(0.03, 0.2);
-        playTone(1200, 0.02, 'square', 0.05);
+        typewriterKey(0.3);
     },
     gameOver: () => {
-        // Descending sad tones
-        playTone(440, 0.2, 'sine', 0.25);
-        setTimeout(() => playTone(349, 0.2, 'sine', 0.25), 150);
-        setTimeout(() => playTone(262, 0.4, 'sine', 0.25), 300);
+        // Multiple keys jammed
+        typewriterJam(0.25);
+        setTimeout(() => typewriterJam(0.2), 100);
+        setTimeout(() => typewriterJam(0.15), 200);
     },
     tick: () => {
-        playTone(800, 0.02, 'sine', 0.08);
+        typewriterKey(0.08);
     },
     start: () => {
-        // Start game sound
-        playTone(523, 0.1, 'sine', 0.2);
-        setTimeout(() => playTone(659, 0.1, 'sine', 0.2), 80);
-        setTimeout(() => playTone(784, 0.15, 'sine', 0.2), 160);
+        // Carriage return sound
+        paperSlide(0.2);
+        setTimeout(() => typewriterDing(0.25), 150);
     }
 };
