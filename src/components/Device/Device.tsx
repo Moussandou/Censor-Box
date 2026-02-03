@@ -121,6 +121,8 @@ export const Device = () => {
                 {/* Polaroids */}
                 <img src={polaroidImg} className="bg-polaroid pol1" alt="Evidence Photo" />
                 <img src={polaroidImg} className="bg-polaroid pol2" alt="Suspect" />
+                <img src={polaroidImg} className="bg-polaroid pol3" alt="Crime Scene" />
+                <img src={polaroidImg} className="bg-polaroid pol4" alt="Witness" />
 
                 <div className="bg-item pen"></div>
 

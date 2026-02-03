@@ -390,6 +390,25 @@
     animation: float 10s ease-in-out infinite reverse;
 }
 
+.pol3 {
+    bottom: 5%;
+    right: 35%;
+    transform: rotate(20deg);
+    width: 95px;
+    z-index: 2;
+    animation: float 9s ease-in-out infinite;
+}
+
+/* Adjusted Pol4: Moved lower as requested */
+.pol4 {
+    top: 75%;
+    left: 2%;
+    transform: rotate(-18deg);
+    width: 85px;
+    z-index: 2;
+    animation: float 11s ease-in-out infinite reverse;
+}
+
 
 /* Responsive breakpoints */
 @media (min-width: 480px) {
