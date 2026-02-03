@@ -3,9 +3,14 @@ import { createPortal } from 'react-dom';
 import { useGameLoop, DIFFICULTIES } from '../../lib/gameEngine';
 import type { WordItem } from '../../lib/gameEngine';
 import { Github, Linkedin, FileUser, Instagram } from 'lucide-react';
+import heartImg from '../../assets/heart.png';
+import agentImg from '../../assets/moussandou.png';
+import noteImg from '../../assets/paper-note.png';
+import stampImg from '../../assets/confidential-stamp.png';
+import fingerprintImg from '../../assets/fingerprints.png';
 import './Screen.css';
 
-type MenuState = 'main' | 'difficulty' | 'game' | 'credits';
+type MenuState = 'main' | 'difficulty' | 'game' | 'credits' | 'tutorial';
 
 interface ScreenProps {
     onInputRef?: (callback: (keyId: number) => void) => void;
@@ -15,9 +20,10 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
     const [menuState, setMenuState] = useState<MenuState>('main');
     const [difficulty, setDifficulty] = useState<string>('normal');
     const [gameKey, setGameKey] = useState(0); // Key to force game restart
+    const [debugWin, setDebugWin] = useState(false); // DEBUG: Force win screen
 
     const { words, currentIndex, score, lives, timeLeft, gameOver, handleInput } = useGameLoop(
-        menuState === 'game',
+        menuState === 'game' && !debugWin,
         difficulty,
         gameKey
     );
@@ -62,15 +68,18 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
         setDifficulty(diff);
         setGameKey(prev => prev + 1); // Force restart
         setMenuState('game');
+        setDebugWin(false);
     };
 
     const handleBackToMenu = () => {
         setMenuState('main');
+        setDebugWin(false);
     };
 
     const handleRetry = () => {
         setGameKey(prev => prev + 1); // Force restart with same difficulty
         setMenuState('game');
+        setDebugWin(false);
     };
 
     const formatTime = (seconds: number) => {
@@ -83,7 +92,7 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
         const hearts = [];
         for (let i = 0; i < lives; i++) {
             hearts.push(
-                <img key={i} src="/src/assets/heart.png" alt="HP" className="heart-asset" />
+                <img key={i} src={heartImg} alt="HP" className="heart-asset" />
             );
         }
         return hearts;
@@ -97,12 +106,16 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                 <div className="vignette"></div>
 
                 <div className="menu-screen">
-                    <div className="menu-logo">CENSOR</div>
+                    {/* Hidden debug trigger on double click of logo, or just click for now since dev mode */}
+                    <div className="menu-logo" onClick={() => setDebugWin(true)} title="DEBUG: Instant Win" style={{ cursor: 'pointer' }}>CENSOR</div>
                     <div className="menu-logo-sub">BOX</div>
 
                     <div className="menu-options main-menu">
                         <button className="menu-btn primary" onClick={() => setMenuState('difficulty')}>
                             START
+                        </button>
+                        <button className="menu-btn" onClick={() => setMenuState('tutorial')}>
+                            BRIEFING
                         </button>
                         <button className="menu-btn" onClick={() => setMenuState('credits')}>
                             CREDITS
@@ -128,7 +141,7 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                     <div className="menu-title">PERSONNEL FILE</div>
 
                     <div className="credits-card">
-                        <img src="/src/assets/moussandou.png" alt="Agent" className="agent-photo" />
+                        <img src={agentImg} alt="Agent" className="agent-photo" />
                         <div className="agent-info">
                             <div className="agent-name">AGENT MOUSSANDOU</div>
                             <div className="agent-rank">FULL STACK DEVELOPER</div>
@@ -144,7 +157,7 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                             <a href="https://moussandou.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" className="link-icon" title="Portfolio">
                                 <FileUser size={20} />
                             </a>
-                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="link-icon" title="Instagram">
+                            <a href="https://www.instagram.com/takaxdev/" target="_blank" rel="noopener noreferrer" className="link-icon" title="Instagram">
                                 <Instagram size={20} />
                             </a>
                         </div>
@@ -152,6 +165,57 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
 
                     <button className="menu-btn back-btn" onClick={handleBackToMenu}>
                         BACK
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    // Tutorial Screen
+    if (menuState === 'tutorial') {
+        return (
+            <div className="screen-container">
+                <div className="scanlines"></div>
+                <div className="vignette"></div>
+
+                <div className="menu-screen tutorial-screen">
+                    <div className="menu-title">MISSION PROTOCOLS</div>
+
+                    <div className="tutorial-content">
+                        <div className="tutorial-step">
+                            <span className="step-num">01</span>
+                            <div className="step-text">
+                                <strong>IDENTIFY SUBJECT</strong><br />
+                                Read the target word on screen.
+                            </div>
+                        </div>
+
+                        <div className="tutorial-step">
+                            <span className="step-num">02</span>
+                            <div className="step-text">
+                                <strong>ANALYZE LENGTH</strong><br />
+                                Estimate character count.<br />
+                                <span className="step-sub">Micro (1-3) | Small (4-5) | Med (6-8) | Large (9+)</span>
+                            </div>
+                        </div>
+
+                        <div className="tutorial-step">
+                            <span className="step-num">03</span>
+                            <div className="step-text">
+                                <strong>REDACT or SKIP</strong><br />
+                                Press <strong>Key 1-4</strong> to censor matches.<br />
+                                Press <strong>SPACE</strong> to SKIP uncertain targets.
+                            </div>
+                        </div>
+
+                        <div className="tutorial-warning">
+                            <span className="warning-icon">⚠</span>
+                            <span>PRECISION REQUIRED. ERRORS WILL BE PENALIZED.</span>
+                        </div>
+                    </div>
+
+                    <button className="menu-btn back-btn" onClick={handleBackToMenu}>
+                        ACKNOWLEDGE
                     </button>
                 </div>
             </div>
@@ -193,6 +257,11 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
         if (timeLeft <= 10) return 'stress-warning';
         return '';
     };
+
+    // Game Screen Logic (Win/Loss)
+    // Modified to respect debugWin
+    const effectiveGameOver = gameOver || debugWin;
+    const isWin = (lives > 0 && timeLeft > 0) || debugWin;
 
     return (
         <div className={`screen-container ${getStressClass()}`} key={gameKey}>
@@ -236,9 +305,9 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                     </div>
                 </div>
 
-                {gameOver && (
+                {effectiveGameOver && (
                     <div className="game-over">
-                        {lives > 0 && timeLeft > 0 ? (
+                        {isWin ? (
                             <div className="win-screen">
                                 <div className="win-status">
                                     <div className="win-title">MISSION COMPLETE</div>
@@ -251,42 +320,42 @@ export const Screen = ({ onInputRef }: ScreenProps) => {
                                             modal?.classList.add('closed');
                                         }}>×</button>
                                         <div className="win-document">
-                                            {/* CSS Paperclip */}
-                                            <div className="doc-clip"></div>
+                                            {/* Paper Background Image using note asset */}
+                                            <img src={noteImg} alt="" className="doc-bg-asset" />
 
-                                            <div className="win-doc-header">
-                                                <div className="dept-seal">USG</div>
-                                                <div className="dept-name">INTELLIGENCE AGENCY</div>
-                                                <div className="classification-mark">TOP SECRET // NOFORN</div>
-                                            </div>
+                                            {/* Fingerprint decorative overlay */}
+                                            <img src={fingerprintImg} alt="" className="doc-fingerprint" />
 
-                                            <div className="win-doc-body">
-                                                <div className="doc-date">DATE: {new Date().toLocaleDateString()}</div>
-                                                <div className="doc-subject">SUBJECT: OPERATION CENSOR BOX</div>
-
-                                                <div className="doc-text-block">
-                                                    <span className="text-line">The following report contains</span>
-                                                    <span className="redacted-chunk w-40"></span>
-                                                    <span className="text-line">regarding the incident at</span>
-                                                    <span className="redacted-chunk w-60"></span>
-                                                    <span className="text-line">. Agent performance was rated as</span>
-                                                    <span className="redacted-chunk w-30"></span>
-                                                    <span className="text-line">exceptional.</span>
+                                            <div className="win-doc-content-wrapper">
+                                                <div className="win-doc-header">
+                                                    <div className="dept-seal">USG</div>
+                                                    <div className="dept-name">INTELLIGENCE AGENCY</div>
+                                                    <div className="classification-mark">TOP SECRET // NOFORN</div>
                                                 </div>
 
-                                                <div className="doc-signature-area">
-                                                    <div className="signature-line">
-                                                        <span className="sig-text">Director J. Edgar</span>
+                                                <div className="win-doc-body">
+                                                    <div className="doc-date">DATE: {new Date().toLocaleDateString()}</div>
+                                                    <div className="doc-subject">SUBJECT: OPERATION CENSOR BOX</div>
+
+                                                    <div className="doc-text-block">
+                                                        <span className="text-line">The following report contains</span>
+                                                        <span className="redacted-chunk w-40"></span>
+                                                        <span className="text-line">regarding the incident at</span>
+                                                        <span className="redacted-chunk w-60"></span>
+                                                        <span className="text-line">. Agent performance was rated as</span>
+                                                        <span className="redacted-chunk w-30"></span>
+                                                        <span className="text-line">exceptional.</span>
                                                     </div>
-                                                    <div className="signature-label">DIRECTOR</div>
-                                                </div>
-                                            </div>
 
-                                            <div className="win-stamp">
-                                                <div className="stamp-inner">
-                                                    APPROVED
-                                                    <span className="stamp-date">{new Date().toLocaleDateString()}</span>
+                                                    <div className="doc-signature-area">
+                                                        <div className="signature-line">
+                                                            <span className="sig-text">Director J. Edgar</span>
+                                                        </div>
+                                                        <div className="signature-label">DIRECTOR</div>
+                                                    </div>
                                                 </div>
+
+                                                <img src={stampImg} alt="CONFIDENTIAL" className="win-stamp-asset" />
                                             </div>
                                         </div>
                                     </div>,

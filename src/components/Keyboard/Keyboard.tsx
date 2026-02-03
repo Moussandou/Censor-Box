@@ -9,6 +9,11 @@ export const Keyboard = ({ onKeyPress }: KeyboardProps) => {
     const [activeKey, setActiveKey] = useState<number | null>(null);
 
     const handlePress = (id: number, e?: React.MouseEvent) => {
+        // Haptic feedback
+        if (typeof navigator !== 'undefined' && navigator.vibrate) {
+            navigator.vibrate(20);
+        }
+
         // Remove focus from button after click
         if (e) {
             (e.target as HTMLButtonElement).blur();

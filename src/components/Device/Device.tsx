@@ -2,6 +2,13 @@ import { useRef, useCallback, useState, useEffect } from 'react';
 import { Screen } from '../Screen/Screen';
 import { Keyboard } from '../Keyboard/Keyboard';
 import { BootSequence } from '../BootSequence/BootSequence';
+import logoImg from '../../assets/logo.png';
+import folderImg from '../../assets/folder.png';
+import stampImg from '../../assets/confidential-stamp.png';
+import paperNoteImg from '../../assets/paper-note.png';
+import fingerprintImg from '../../assets/fingerprints.png';
+import polaroidImg from '../../assets/polaroid.png';
+import bgMusic from '../../assets/Investigation Music Background  Suspenseful Tension Criminal Background Music Royalty Free.mp3';
 import './Device.css';
 
 export const Device = () => {
@@ -22,7 +29,7 @@ export const Device = () => {
 
     useEffect(() => {
         // Create audio element for background music
-        audioRef.current = new Audio('/src/assets/Investigation Music Background  Suspenseful Tension Criminal Background Music Royalty Free.mp3');
+        audioRef.current = new Audio(bgMusic);
         audioRef.current.loop = true;
         audioRef.current.volume = 0.3;
         // Apply initial mute state
@@ -68,6 +75,7 @@ export const Device = () => {
     }, []);
 
     const handleReset = () => {
+        if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(20);
         // Trigger CRT OFF animation
         setPowerState('off');
 
@@ -80,6 +88,7 @@ export const Device = () => {
     };
 
     const toggleMute = () => {
+        if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(20);
         setIsMuted((prev: boolean) => !prev);
     };
 
@@ -90,18 +99,53 @@ export const Device = () => {
     return (
         <div className="scene">
             <div className="bg-elements">
-                <div className="bg-folder f1">TOP SECRET</div>
-                <div className="bg-folder f2">CONFIDENTIAL</div>
+                <div className="bg-folder-container f1">
+                    <img src={folderImg} className="folder-asset" alt="Top Secret Folder" />
+                    <img src={stampImg} className="folder-stamp" alt="CONFIDENTIAL" />
+                </div>
+                <div className="bg-folder-container f2">
+                    <img src={folderImg} className="folder-asset" alt="Confidential Folder" />
+                    <img src={stampImg} className="folder-stamp" alt="CONFIDENTIAL" />
+                </div>
+
+                {/* New Folders (clutter) */}
+                <div className="bg-folder-container f3">
+                    <img src={folderImg} className="folder-asset" alt="Evidence" />
+                    <div className="folder-text">EVIDENCE</div>
+                </div>
+                <div className="bg-folder-container f4">
+                    <img src={folderImg} className="folder-asset" alt="Case File" />
+                    <div className="folder-text">CASE #23</div>
+                </div>
+
+                {/* Polaroids */}
+                <img src={polaroidImg} className="bg-polaroid pol1" alt="Evidence Photo" />
+                <img src={polaroidImg} className="bg-polaroid pol2" alt="Suspect" />
+
                 <div className="bg-item pen"></div>
+
+                {/* Background Paper Note */}
+                <div className="bg-paper-container bg-p1">
+                    <img src={paperNoteImg} className="paper-asset" alt="" />
+                    <img src={fingerprintImg} className="paper-fingerprint" alt="" />
+                </div>
             </div>
 
             <div className="rdctd-console">
-                <div className="post-it p1">DO NOT<br />LEAK</div>
-                <div className="post-it p2">EYES<br />ONLY</div>
+                {/* Console Paper Notes (Replacing Post-its + Fingerprints) */}
+                <div className="console-paper-container cp1">
+                    <img src={paperNoteImg} className="paper-asset" alt="Note" />
+                    <div className="paper-text">DO NOT<br />LEAK</div>
+                </div>
+
+                <div className="console-paper-container cp2">
+                    <img src={paperNoteImg} className="paper-asset" alt="Note" />
+                    <div className="paper-text">EYES<br />ONLY</div>
+                </div>
 
                 <div className="console-body">
                     <div className="brand-header">
-                        <img src="/src/assets/logo.png" alt="" className="brand-logo" />
+                        <img src={logoImg} alt="" className="brand-logo" />
                         <span className="brand-text">CENSOR BOX <span className="tm">™</span></span>
 
                         <button

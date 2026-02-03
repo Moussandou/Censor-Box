@@ -176,7 +176,7 @@ export const useGameLoop = (active: boolean, difficulty: string = 'normal', rese
             setGameOver(true);
             sounds.gameOver();
         }
-    }, [gameOver, active, words]); // Added 'words' dependency
+    }, [gameOver, active, words]);
 
     return {
         words,

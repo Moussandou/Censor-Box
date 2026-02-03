@@ -97,9 +97,15 @@
 }
 
 .bar-graphic {
-    height: 6px;
-    background: #222;
+    height: 8px;
+    /* Slightly taller to contain text or just be substantial */
+    background: #1a1a1a;
     border-radius: 2px;
+    width: 100%;
+    /* Fill container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .area-k1 .bar-graphic {
