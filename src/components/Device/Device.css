@@ -91,7 +91,7 @@
     height: 28px !important;
     min-width: 28px;
     font-size: 0.8rem;
-    cursor: pointer;
+    /* cursor: pointer; handled by * in index.css */
     display: flex !important;
     align-items: center;
     justify-content: center;
