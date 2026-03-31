@@ -1,44 +1,44 @@
 # 📦 Censor Box
 
-**Censor Box** est une simulation de terminal de renseignement rétro-futuriste où vous incarnez un agent chargé de censurer des documents confidentiels. Le jeu combine rapidité, précision et une esthétique "Top Secret" immersive.
+**Censor Box** is a retro-futuristic intelligence terminal simulation where you play as an agent tasked with redacting confidential documents. The game combines speed, precision, and an immersive "Top Secret" aesthetic.
 
-![Aperçu du jeu](src/assets/logo.png)
+![Game Logo](src/assets/logo.png)
 
-## 🎯 Le Concept
+## 🎯 The Concept
 
-Votre mission est simple mais cruciale : traiter un flux de mots sensibles en les classant par taille pour les censurer correctement. Une erreur, et l'information fuite. Trop de fuites, et la mission est compromise.
+Your mission is simple but crucial: process a stream of sensitive words by classifying them by size to redact them correctly. One mistake, and the information leaks. Too many leaks, and the mission is compromised.
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-- **Interface Rétro Immersive** : Effet d'écran CRT, lignes de balayage (scanlines), et une ambiance sonore de suspense.
-- **Système de Jeu Basé sur la Rapidité** : Identifiez la longueur des mots en un clin d'œil.
-- **Niveaux de Difficulté** : Du mode "Entraînement" au mode "Agent d'Élite".
-- **Rapports de Mission** : Recevez un document classifié à la fin de vos missions réussies.
-- **Contrôles Réalistes** : Utilisation d'un clavier virtuel intégré et support du clavier physique.
+- **Immersive Retro Interface**: CRT screen effect, scanlines, and a suspenseful soundscape.
+- **Speed-Based Gameplay**: Identify word lengths in the blink of an eye.
+- **Difficulty Levels**: From "Training" mode to "Elite Agent" mode.
+- **Mission Reports**: Receive a classified document upon successful completion of your missions.
+- **Realistic Controls**: Use of an integrated virtual keyboard and support for physical keyboards.
 
-## 🛠️ Comment Jouer ?
+## 🛠️ How to Play?
 
-1.  **Identifier le mot** : Regardez le mot cible au centre de l'écran.
-2.  **Analyser la taille** :
-    -   **MICRO** (1-3 caractères) → Touche **1**
-    -   **SMALL** (4-5 caractères) → Touche **2**
-    -   **MEDIUM** (6-8 caractères) → Touche **3**
-    -   **LARGE** (9+ caractères) → Touche **4**
-3.  **Passer** : Appuyez sur **ESPACE** si vous avez un doute.
-4.  **Réinitialiser** : Utilisez le bouton ↻ sur la console pour redémarrer le système.
+1.  **Identify the Word**: Look at the target word in the center of the screen.
+2.  **Analyze the Size**:
+    -   **MICRO** (1-3 characters) → Key **1**
+    -   **SMALL** (4-5 characters) → Key **2**
+    -   **MEDIUM** (6-8 characters) → Key **3**
+    -   **LARGE** (9+ characters) → Key **4**
+3.  **Skip**: Press **SPACE** if you have a doubt.
+4.  **Reset**: Use the ↻ button on the console to restart the system.
 
-## 💻 Technologies Utilisées
+## 💻 Technologies Used
 
 - **React 19**
 - **TypeScript**
 - **Vite**
-- **Keyboard CSS** (pour le rendu des touches)
-- **Lucide React** (pour les icônes)
-- **CSS Custom Properties** (pour les animations CRT et le thème)
+- **Keyboard CSS** (for key rendering)
+- **Lucide React** (for icons)
+- **CSS Custom Properties** (for CRT animations and theming)
 
-## 👤 Crédits
+## 👤 Credits
 
-Développé par **Agent Moussandou** (Full Stack Developer).
+Developed by **Agent Moussandou** (Full Stack Developer).
 
 - 🐙 [GitHub](https://github.com/Moussandou)
 - 💼 [LinkedIn](https://www.linkedin.com/in/moussandou/)
@@ -47,4 +47,4 @@ Développé par **Agent Moussandou** (Full Stack Developer).
 
 ---
 
-*PROPRIÉTÉ DE L'AGENCE DE RENSEIGNEMENT - ACCÈS RESTREINT*
+*PROPERTY OF THE INTELLIGENCE AGENCY - RESTRICTED ACCESS*
