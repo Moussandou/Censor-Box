@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# 📦 Censor Box
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Censor Box** est une simulation de terminal de renseignement rétro-futuriste où vous incarnez un agent chargé de censurer des documents confidentiels. Le jeu combine rapidité, précision et une esthétique "Top Secret" immersive.
 
-Currently, two official plugins are available:
+![Aperçu du jeu](src/assets/logo.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Le Concept
 
-## React Compiler
+Votre mission est simple mais cruciale : traiter un flux de mots sensibles en les classant par taille pour les censurer correctement. Une erreur, et l'information fuite. Trop de fuites, et la mission est compromise.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Fonctionnalités
 
-## Expanding the ESLint configuration
+- **Interface Rétro Immersive** : Effet d'écran CRT, lignes de balayage (scanlines), et une ambiance sonore de suspense.
+- **Système de Jeu Basé sur la Rapidité** : Identifiez la longueur des mots en un clin d'œil.
+- **Niveaux de Difficulté** : Du mode "Entraînement" au mode "Agent d'Élite".
+- **Rapports de Mission** : Recevez un document classifié à la fin de vos missions réussies.
+- **Contrôles Réalistes** : Utilisation d'un clavier virtuel intégré et support du clavier physique.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Comment Jouer ?
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1.  **Identifier le mot** : Regardez le mot cible au centre de l'écran.
+2.  **Analyser la taille** :
+    -   **MICRO** (1-3 caractères) → Touche **1**
+    -   **SMALL** (4-5 caractères) → Touche **2**
+    -   **MEDIUM** (6-8 caractères) → Touche **3**
+    -   **LARGE** (9+ caractères) → Touche **4**
+3.  **Passer** : Appuyez sur **ESPACE** si vous avez un doute.
+4.  **Réinitialiser** : Utilisez le bouton ↻ sur la console pour redémarrer le système.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 💻 Technologies Utilisées
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **React 19**
+- **TypeScript**
+- **Vite**
+- **Keyboard CSS** (pour le rendu des touches)
+- **Lucide React** (pour les icônes)
+- **CSS Custom Properties** (pour les animations CRT et le thème)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 👤 Crédits
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Développé par **Agent Moussandou** (Full Stack Developer).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 🐙 [GitHub](https://github.com/Moussandou)
+- 💼 [LinkedIn](https://www.linkedin.com/in/moussandou/)
+- 🌐 [Portfolio](https://moussandou.github.io/Portfolio/)
+- 📸 [Instagram](https://www.instagram.com/takaxdev/)
+
+---
+
+*PROPRIÉTÉ DE L'AGENCE DE RENSEIGNEMENT - ACCÈS RESTREINT*
