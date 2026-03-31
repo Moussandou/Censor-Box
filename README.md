@@ -38,7 +38,7 @@ Your mission is simple but crucial: process a stream of sensitive words by class
 
 ## 👤 Credits
 
-Developed by **Agent Moussandou** (Full Stack Developer).
+Developed by **Moussandou** (Full Stack Developer).
 
 - 🐙 [GitHub](https://github.com/Moussandou)
 - 💼 [LinkedIn](https://www.linkedin.com/in/moussandou/)
